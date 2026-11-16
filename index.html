@@ -90,14 +90,27 @@
       background: var(--red);
       box-shadow: 0 7px 18px rgba(216, 60, 80, .24);
     }
+    #yes {
+      position: relative;
+      z-index: 1;
+      transform: scale(var(--yes-scale, 1));
+    }
     #yes:hover, .next-link:hover { background: var(--red-dark); }
-    #yes:active, .next-link:active { transform: scale(.97); }
+    #yes:active { transform: scale(calc(var(--yes-scale, 1) * .97)); }
+    .next-link:active { transform: scale(.97); }
 
     #no {
       color: var(--red-dark);
       background: #ffe5e7;
     }
     #no:hover { background: #ffd6da; }
+
+    .message {
+      min-height: 24px;
+      margin: 16px 0 0;
+      color: var(--red-dark);
+      font: 650 14px/1.5 system-ui, sans-serif;
+    }
 
     .success { animation: appear .45s ease both; }
     .success h1 { color: var(--red-dark); }
@@ -147,6 +160,7 @@
       <button id="yes" type="button">JOO! ❤️</button>
       <button id="no" type="button">EI 💔</button>
     </div>
+    <p class="message" id="message" role="status" aria-live="polite"></p>
   </main>
 
   <script>
@@ -155,6 +169,15 @@
 
     const card = document.getElementById("card");
     const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+    const message = document.getElementById("message");
+    let noCount = 0;
+
+    noButton.addEventListener("click", () => {
+      noCount += 1;
+      message.textContent = "Hups, väärä vastaus 😉";
+      yesButton.style.setProperty("--yes-scale", String(Math.min(1 + noCount * 0.18, 2.4)));
+    });
 
     yesButton.addEventListener("click", () => {
       const recipient = PHONE_NUMBER.trim().replace(/[^+\d]/g, "");
