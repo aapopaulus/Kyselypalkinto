@@ -165,7 +165,7 @@
 
   <script>
     const PHONE_NUMBER = "+358400950417";
-    const SMS_TEXT = "No, millon mennään?";
+    const SMS_TEXT = "Noo 🤭, millon mennään?";
 
     const card = document.getElementById("card");
     const yesButton = document.getElementById("yes");
@@ -184,8 +184,8 @@
       const smsUrl = `sms:${recipient}?&body=${encodeURIComponent(SMS_TEXT)}`;
       card.innerHTML = `
         <section class="success">
-          <h1>Jes! 🤩</h1>
-          <a class="next-link" href="${smsUrl}">Seuraava kohta</a>
+          <h1>Jess! 🤩</h1>
+          <a class="next-link" href="${smsUrl}">Seuraavaksi...</a>
         </section>`;
     });
   </script>
