@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8f4">
+  <title>Yksi tärkeä kysymys</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #3a2633;
+      --muted: #806b77;
+      --rose: #d94f70;
+      --rose-dark: #bd3659;
+      --cream: #fff8f4;
+      --paper: rgba(255, 255, 255, .86);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 24px;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 12% 18%, rgba(255, 205, 213, .6), transparent 34%),
+        radial-gradient(ellipse at 88% 82%, rgba(255, 222, 189, .55), transparent 35%),
+        var(--cream);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    }
+
+    .sparkle {
+      position: fixed;
+      z-index: 0;
+      color: rgba(217, 79, 112, .24);
+      font-size: clamp(20px, 4vw, 42px);
+      animation: float 6s ease-in-out infinite;
+      user-select: none;
+    }
+    .sparkle.one { top: 13%; left: 12%; }
+    .sparkle.two { top: 22%; right: 13%; animation-delay: -2s; font-size: 25px; }
+    .sparkle.three { bottom: 13%; left: 19%; animation-delay: -4s; font-size: 28px; }
+    .sparkle.four { right: 17%; bottom: 15%; animation-delay: -1s; }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 560px);
+      padding: clamp(34px, 7vw, 64px) clamp(24px, 7vw, 62px);
+      border: 1px solid rgba(255, 255, 255, .9);
+      border-radius: 30px;
+      background: var(--paper);
+      box-shadow: 0 24px 80px rgba(109, 62, 77, .12), 0 3px 12px rgba(109, 62, 77, .06);
+      text-align: center;
+      backdrop-filter: blur(12px);
+      animation: appear .7s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--rose-dark);
+      font: 700 11px/1.4 system-ui, sans-serif;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .heart {
+      display: grid;
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 24px;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff0f2;
+      color: var(--rose);
+      font: 30px/1 system-ui, sans-serif;
+      box-shadow: 0 8px 22px rgba(217, 79, 112, .12);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 7vw, 48px);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: 1.12;
+    }
+    h1 span { color: var(--rose-dark); font-style: italic; }
+
+    .subtitle {
+      max-width: 360px;
+      margin: 18px auto 30px;
+      color: var(--muted);
+      font: 15px/1.7 system-ui, sans-serif;
+    }
+
+    .buttons {
+      display: flex;
+      min-height: 58px;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    button, .sms-link {
+      min-height: 50px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 27px;
+      font: 700 14px/1 system-ui, sans-serif;
+      cursor: pointer;
+      transition: transform .24s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    #yes {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      background: var(--rose);
+      box-shadow: 0 9px 22px rgba(217, 79, 112, .28);
+      transform: scale(var(--yes-scale, 1));
+    }
+    #yes:hover, .sms-link:hover { background: var(--rose-dark); box-shadow: 0 12px 25px rgba(217, 79, 112, .3); }
+    #yes:active, .sms-link:active { transform: scale(.97); }
+
+    #no {
+      color: #705c66;
+      background: #f5edf0;
+    }
+    #no:hover { background: #eee1e7; }
+
+    .message {
+      min-height: 25px;
+      margin: 17px 0 0;
+      color: var(--rose-dark);
+      font: 600 14px/1.5 system-ui, sans-serif;
+    }
+
+    .success { animation: appear .5s ease both; }
+    .success .heart { animation: heartbeat 1.1s ease-in-out infinite; }
+    .success h1 { font-size: clamp(35px, 7vw, 50px); }
+    .sms-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5px;
+      color: #fff;
+      background: var(--rose);
+      box-shadow: 0 9px 22px rgba(217, 79, 112, .28);
+      text-decoration: none;
+    }
+    .small-note { margin: 18px 0 0; color: var(--muted); font: 12px/1.6 system-ui, sans-serif; }
+
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-12px) rotate(9deg); } }
+    @keyframes appear { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.12); } 30% { transform: scale(1); } 45% { transform: scale(1.08); } }
+
+    @media (max-width: 420px) {
+      body { padding: 16px; }
+      .card { border-radius: 24px; }
+      .buttons { gap: 12px; }
+      button { padding: 0 23px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <span class="sparkle one" aria-hidden="true">✦</span>
+  <span class="sparkle two" aria-hidden="true">✧</span>
+  <span class="sparkle three" aria-hidden="true">✧</span>
+  <span class="sparkle four" aria-hidden="true">✦</span>
+
+  <main class="card" id="card" aria-live="polite">
+    <p class="eyebrow">Minulla olisi sinulle kysymys</p>
+    <div class="heart" aria-hidden="true">♡</div>
+    <h1>Lähtisitkö<br><span>treffeille</span> kanssani?</h1>
+    <p class="subtitle">Lupaan hyvää seuraa, jotain herkullista ja ainakin yhden syyn hymyillä.</p>
+    <div class="buttons">
+      <button id="yes" type="button">Kyllä, mielelläni!</button>
+      <button id="no" type="button">Ei</button>
+    </div>
+    <p class="message" id="message" role="status"></p>
+  </main>
+
+  <script>
+    // Lisää tähän numerosi kansainvälisessä muodossa, esim. +358401234567.
+    // Tyhjänä viesti avautuu ilman vastaanottajaa, jotta numeron voi valita puhelimesta.
+    const PHONE_NUMBER = "";
+    const SMS_TEXT = "No, millon mennään?";
+
+    const card = document.getElementById("card");
+    const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+    const message = document.getElementById("message");
+    let noCount = 0;
+
+    noButton.addEventListener("click", () => {
+      noCount += 1;
+      message.textContent = "Hups, väärä vastaus 😉";
+      yesButton.style.setProperty("--yes-scale", String(Math.min(1 + noCount * 0.18, 2.4)));
+    });
+
+    yesButton.addEventListener("click", () => {
+      const recipient = PHONE_NUMBER.trim().replace(/[^+\d]/g, "");
+      const smsUrl = `sms:${recipient}?&body=${encodeURIComponent(SMS_TEXT)}`;
+      card.innerHTML = `
+        <section class="success">
+          <p class="eyebrow">Tiesin, että valitset oikein</p>
+          <div class="heart" aria-hidden="true">♥</div>
+          <h1>Onnea meille!<br><span>Tästä tulee ihanaa.</span></h1>
+          <p class="subtitle">Nyt enää tärkein kysymys:</p>
+          <a class="sms-link" href="${smsUrl}">Lähetä minulle viesti ✉</a>
+          <p class="small-note">Viestissä lukee: “${SMS_TEXT}”</p>
+        </section>`;
+    });
+  </script>
+</body>
+</html>
